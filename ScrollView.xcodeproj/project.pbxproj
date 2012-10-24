@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D2A2FB11638776C004C621A /* UserClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2A2FB01638776C004C621A /* UserClass.m */; };
 		3D91D7A1163839950088F164 /* progress-bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D91D7A0163839940088F164 /* progress-bar.png */; };
 		3D91D7A416383ADC0088F164 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D91D7A316383ADC0088F164 /* FacebookSDK.framework */; };
 		3D91D7A616383AEB0088F164 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3D91D7A516383AEB0088F164 /* FacebookSDKResources.bundle */; };
 		3D91D7A916383B100088F164 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D91D7A716383B050088F164 /* Accounts.framework */; };
 		3D91D7AC16383B1F0088F164 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D91D7AA16383B170088F164 /* AdSupport.framework */; };
+		3D91D7C3163856BD0088F164 /* showInforView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D91D7C2163856BD0088F164 /* showInforView.m */; };
 		3DAF7BE91637050F0045EC9F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAF7BE81637050F0045EC9F /* UIKit.framework */; };
 		3DAF7BEB1637050F0045EC9F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAF7BEA1637050F0045EC9F /* Foundation.framework */; };
 		3DAF7BED1637050F0045EC9F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAF7BEC1637050F0045EC9F /* CoreGraphics.framework */; };
@@ -26,11 +28,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D2A2FAF1638776C004C621A /* UserClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserClass.h; sourceTree = "<group>"; };
+		3D2A2FB01638776C004C621A /* UserClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserClass.m; sourceTree = "<group>"; };
 		3D91D7A0163839940088F164 /* progress-bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progress-bar.png"; sourceTree = "<group>"; };
 		3D91D7A316383ADC0088F164 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		3D91D7A516383AEB0088F164 /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FacebookSDKResources.bundle; sourceTree = "<group>"; };
 		3D91D7A716383B050088F164 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		3D91D7AA16383B170088F164 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		3D91D7C1163856BD0088F164 /* showInforView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = showInforView.h; sourceTree = "<group>"; };
+		3D91D7C2163856BD0088F164 /* showInforView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = showInforView.m; sourceTree = "<group>"; };
 		3DAF7BE41637050F0045EC9F /* ScrollView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrollView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DAF7BE81637050F0045EC9F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3DAF7BEA1637050F0045EC9F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -105,6 +111,10 @@
 				3DAF7C001637050F0045EC9F /* MainStoryboard.storyboard */,
 				3DAF7C031637050F0045EC9F /* ViewController.h */,
 				3DAF7C041637050F0045EC9F /* ViewController.m */,
+				3D2A2FAF1638776C004C621A /* UserClass.h */,
+				3D2A2FB01638776C004C621A /* UserClass.m */,
+				3D91D7C1163856BD0088F164 /* showInforView.h */,
+				3D91D7C2163856BD0088F164 /* showInforView.m */,
 				3D91D7A0163839940088F164 /* progress-bar.png */,
 				3DAF7BEF1637050F0045EC9F /* Supporting Files */,
 			);
@@ -196,6 +206,8 @@
 				3DAF7BF51637050F0045EC9F /* main.m in Sources */,
 				3DAF7BF91637050F0045EC9F /* AppDelegate.m in Sources */,
 				3DAF7C051637050F0045EC9F /* ViewController.m in Sources */,
+				3D91D7C3163856BD0088F164 /* showInforView.m in Sources */,
+				3D2A2FB11638776C004C621A /* UserClass.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

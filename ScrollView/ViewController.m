@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "AppDelegate.h"
+#import "showInforView.h"
 @interface ViewController ()
 
 @end
@@ -51,14 +52,28 @@
     if (appDelegate.session.isOpen) {
         // valid account UI is shown whenever the session is open
         [self.fbutton setTitle:@"Log out" forState:UIControlStateNormal];
-        [self.txtfb setText:[NSString stringWithFormat:@"https://graph.facebook.com/me/friends?access_token=%@",
-                                      appDelegate.session.accessToken]];
+        [self.txtfb setText:[NSString stringWithFormat:@"https://graph.facebook.com/me/friends?access_token=%@",appDelegate.session.accessToken]];
+        
+       
     } else {
         // login-needed account UI is shown whenever the session is closed
         [self.fbutton setTitle:@"Log in" forState:UIControlStateNormal];
         [self.txtfb setText:@"Login to create a link to fetch account data"];
     }
 
+
+}
+
+-(void)getFriendFb:(NSString*)url{
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init] ;
+    [request setURL:[NSURL URLWithString:url];
+    
+    [request setHTTPMethod:@"POST"];
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+	[request setHTTPBody:postData];
+	
+    NSLog(@"get friends",);
 
 }
 
@@ -77,11 +92,23 @@
 - (IBAction)doBasicLogin:(id)sender {
     @try {
         
-    NSString *post = [NSString stringWithFormat:@"user[email]=%@&user[password]=%@", _email.text, _password.text];
-    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding                            allowLossyConversion:YES];
+        NSString *post = [NSString stringWithFormat:@"user[email]=%@&user[password]=%@", _email.text, _password.text];
+        NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding                            allowLossyConversion:YES];
 	
-    NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
+        NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
 	
+        NSMutableURLRequest *request = [self LoginLocal:postData :postLength];
+        [self getResponseData:request];
+        [self performSegueWithIdentifier:@"local" sender:sender];
+    }
+    @catch (NSException *exception) {
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:exception.description delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+-(NSMutableURLRequest*)LoginLocal:(NSData*)postData:(NSString*)postLength{
+    
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init] ;
     [request setURL:[NSURL URLWithString:@"http:/test:test@trainingtest.herokuapp.com/api/v1/users/sign_in"]];
     
@@ -90,16 +117,23 @@
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
 	[request setHTTPBody:postData];
 	
+    return request;
+
+}
+
+-(void)getResponseData:(NSMutableURLRequest*)request{
     NSURLResponse *response;
     NSError *err;
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
-        NSLog(@"get data %@",responseData);
+    if (responseData) {
+        NSDictionary *res = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableLeaves error:&err];
+       
+        NSLog(@"responseData: %@", res);
+        
     }
-    @catch (NSException *exception) {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Oops Error" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-    }
+
 }
+
 - (void)viewDidUnload
 {
     self.fbutton = nil;
@@ -107,15 +141,12 @@
     
     [super viewDidUnload];
 }
+
 - (IBAction)doLoginFB:(id)sender {
         
     AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
         
            if (appDelegate.session.isOpen) {
-            // if a user logs out explicitly, we delete any cached token information, and next
-            // time they run the applicaiton they will be presented with log in UX again; most
-            // users will simply close the app or switch away, without logging out; this will
-            // cause the implicit cached-token login to occur on next launch of the application
             [appDelegate.session closeAndClearTokenInformation];
             
         } else {
@@ -134,4 +165,18 @@
         } 
 
 }
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    if ([[segue identifier]
+         isEqualToString:@"local"]){
+        
+        showInforView *viewController = [segue destinationViewController];
+        [viewController setShoEmailText:_email.text ];
+       
+        
+    }
+    
+}
+
+
 @end
