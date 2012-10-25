@@ -25,6 +25,8 @@
 		3DAF7BFF1637050F0045EC9F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DAF7BFE1637050F0045EC9F /* Default-568h@2x.png */; };
 		3DAF7C021637050F0045EC9F /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DAF7C001637050F0045EC9F /* MainStoryboard.storyboard */; };
 		3DAF7C051637050F0045EC9F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAF7C041637050F0045EC9F /* ViewController.m */; };
+		3DC4B1E51639F581000DD021 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC4B1E41639F581000DD021 /* FriendsViewController.m */; };
+		3DC4B1E91639F679000DD021 /* FriendsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC4B1E81639F679000DD021 /* FriendsCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +55,10 @@
 		3DAF7C011637050F0045EC9F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		3DAF7C031637050F0045EC9F /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		3DAF7C041637050F0045EC9F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		3DC4B1E31639F581000DD021 /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
+		3DC4B1E41639F581000DD021 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
+		3DC4B1E71639F679000DD021 /* FriendsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsCell.h; sourceTree = "<group>"; };
+		3DC4B1E81639F679000DD021 /* FriendsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +115,10 @@
 				3DAF7BF71637050F0045EC9F /* AppDelegate.h */,
 				3DAF7BF81637050F0045EC9F /* AppDelegate.m */,
 				3DAF7C001637050F0045EC9F /* MainStoryboard.storyboard */,
+				3DC4B1E71639F679000DD021 /* FriendsCell.h */,
+				3DC4B1E81639F679000DD021 /* FriendsCell.m */,
+				3DC4B1E31639F581000DD021 /* FriendsViewController.h */,
+				3DC4B1E41639F581000DD021 /* FriendsViewController.m */,
 				3DAF7C031637050F0045EC9F /* ViewController.h */,
 				3DAF7C041637050F0045EC9F /* ViewController.m */,
 				3D2A2FAF1638776C004C621A /* UserClass.h */,
@@ -208,6 +218,8 @@
 				3DAF7C051637050F0045EC9F /* ViewController.m in Sources */,
 				3D91D7C3163856BD0088F164 /* showInforView.m in Sources */,
 				3D2A2FB11638776C004C621A /* UserClass.m in Sources */,
+				3DC4B1E51639F581000DD021 /* FriendsViewController.m in Sources */,
+				3DC4B1E91639F679000DD021 /* FriendsCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

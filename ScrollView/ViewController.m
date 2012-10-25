@@ -14,7 +14,8 @@
 @end
 
 @implementation ViewController
-
+@synthesize username =_username;
+@synthesize user_email = _user_email;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -40,24 +41,29 @@
                                                              FBSessionState status,
                                                              NSError *error) {
                 
-                [[[FBRequest alloc] initWithSession:session graphPath:@"me?fields=id,name,email"] startWithCompletionHandler:
+                [[[FBRequest alloc] initWithSession:session graphPath:@"me?fields=id,name,email,picture"] startWithCompletionHandler:
                  ^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
                      if (!error) {
                          self.txtfb.text = user.name;
-                         
-                         NSLog(@"%@",user);
-                         NSLog(@"%@", [user objectForKey:@"email"]);
-                         [self authentication:appDelegate.session.accessToken :user.id :[user objectForKey:@"email"] :user.name];
+                         [self authentication:appDelegate.session.accessToken :user.id :[user objectForKey:@"email"] :user.name:[user objectForKey:@"picture"][@"data"][@"url"]];
                          // self.userProfileImage.profileID = [user objectForKey:@"id"];
                      }
                  }];
-                // we recurse here, in order to update buttons and labels
                 [self updateView];
             }];
         }
     }
 
 }
+
+-(void)setUser_email:(NSString *)user_email{
+    _user_email=user_email;
+}
+
+-(void)setUsername:(NSString *)username{
+    _username = username;
+}
+
 -(void)updateView{
     // get the app delegate, so that we can reference the session property
     AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
@@ -88,25 +94,24 @@
     return YES;
 }
 
--(void)authentication:(NSString*)token:(NSString*)uid:(NSString*)email:(NSString*)username{
+-(void)authentication:(NSString*)token:(NSString*)uid:(NSString*)email:(NSString*)username:(NSString*)picture{
     NSString *post = [NSString stringWithFormat:@"user[email]=%@&user[oauth_token]=%@&user[provider]=facebook&user[uid]=%@&user[username]=%@", email,token,uid,username];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding                            allowLossyConversion:YES];
 	
     NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
     NSString*url= @"http:/test:test@trainingtest.herokuapp.com/api/v1/users/authentications";
     NSMutableURLRequest *request = [self LoginLocal:postData :postLength: url:@"POST"];
-    [self getResponseData:request ];
+    [self getResponseData:request:email:username:picture ];
 
 
 }
 
 - (IBAction)doBasicLogin:(id)sender {
     @try {
-        UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     
-        spinner.center = CGPointMake(160, 240);
-        spinner.hidesWhenStopped = YES;
-    
+        
+        [spinner setCenter:CGPointMake(160, 240)];
         [self.view addSubview:spinner];
     
         [spinner startAnimating];
@@ -117,7 +122,7 @@
         NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
         NSString*url= @"http:/test:test@trainingtest.herokuapp.com/api/v1/users/sign_in";
         NSMutableURLRequest *request = [self LoginLocal:postData :postLength: url:@"POST"];
-        [self getResponseData:request ];
+        [self getResponseData:request:_email.text:_username:@"" ];
         [spinner stopAnimating];
 
         
@@ -137,22 +142,26 @@
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
 	[request setHTTPBody:postData];
-	
+	_user_email = _email.text;
     return request;
 
 }
 
--(void)getResponseData:(NSMutableURLRequest*)request {
+-(void)getResponseData:(NSMutableURLRequest*)request:(NSString*)email:(NSString*)usename:(NSString*)picture {
     NSURLResponse *response;
     NSError *err;
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
     if (responseData) {
         NSDictionary *res = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableLeaves error:&err];
          NSLog(@"responseData: %@", [res objectForKey:@"code"]);
-        if ([[res objectForKey:@"code"] isEqualToString: @"API_SUCCESS" ]) {
+        if ([[res objectForKey:@"code"] isEqualToString: @"API_SUCCESS" ] || [[res objectForKey:@"code"] isEqualToString: @"API_USER_SIGNED_IN" ]  || [[res objectForKey:@"code"] isEqualToString: @"API_USER_CREATED" ] )
+        {
+
+       
             //[self performSegueWithIdentifier:@"local" sender:sender];
             showInforView *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"showInforView"];
-            [viewController setShoEmailText:_email.text ];
+            
+            [viewController setShoEmailText:email:usename:picture ];
             [self presentModalViewController:viewController animated:YES];
         }
         else{
@@ -203,7 +212,7 @@
          isEqualToString:@"local"]){
         
         showInforView *viewController = [segue destinationViewController];
-        [viewController setShoEmailText:_email.text ];
+        //[viewController setShoEmailText:_email.text:_username:@"" ];
        
         
     }

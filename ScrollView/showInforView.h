@@ -13,7 +13,11 @@
 @property (strong, nonatomic) UserClass* dataObject;
 @property (strong, nonatomic) NSString*txt;
 @property (strong, nonatomic) NSString*user_name;
+@property (strong, nonatomic) NSString*user_picture;
+@property (strong, nonatomic) NSDictionary*friends;
 @property (nonatomic, assign) id delegate;
--(void)setShoEmailText:(NSString *)txt;
+-(void)setShoEmailText:(NSString *)txt:(NSString *)username:(NSString*)picture;
+@property (weak, nonatomic) IBOutlet UIImageView *my_picture;
 @property (weak, nonatomic) IBOutlet UILabel *showUsername;
+- (IBAction)doShowFriends:(id)sender;
 @end
