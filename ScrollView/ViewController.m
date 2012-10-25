@@ -39,6 +39,18 @@
             [appDelegate.session openWithCompletionHandler:^(FBSession *session,
                                                              FBSessionState status,
                                                              NSError *error) {
+                
+                [[[FBRequest alloc] initWithSession:session graphPath:@"me?fields=id,name,email"] startWithCompletionHandler:
+                 ^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
+                     if (!error) {
+                         self.txtfb.text = user.name;
+                         
+                         NSLog(@"%@",user);
+                         NSLog(@"%@", [user objectForKey:@"email"]);
+                         [self authentication:appDelegate.session.accessToken :user.id :[user objectForKey:@"email"] :user.name];
+                         // self.userProfileImage.profileID = [user objectForKey:@"id"];
+                     }
+                 }];
                 // we recurse here, in order to update buttons and labels
                 [self updateView];
             }];
@@ -54,26 +66,13 @@
         [self.fbutton setTitle:@"Log out" forState:UIControlStateNormal];
         [self.txtfb setText:[NSString stringWithFormat:@"https://graph.facebook.com/me/friends?access_token=%@",appDelegate.session.accessToken]];
         
-       
+
     } else {
         // login-needed account UI is shown whenever the session is closed
         [self.fbutton setTitle:@"Log in" forState:UIControlStateNormal];
         [self.txtfb setText:@"Login to create a link to fetch account data"];
     }
 
-
-}
-
--(void)getFriendFb:(NSString*)url{
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init] ;
-    [request setURL:[NSURL URLWithString:url];
-    
-    [request setHTTPMethod:@"POST"];
-    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
-    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-	[request setHTTPBody:postData];
-	
-    NSLog(@"get friends",);
 
 }
 
@@ -89,17 +88,39 @@
     return YES;
 }
 
+-(void)authentication:(NSString*)token:(NSString*)uid:(NSString*)email:(NSString*)username{
+    NSString *post = [NSString stringWithFormat:@"user[email]=%@&user[oauth_token]=%@&user[provider]=facebook&user[uid]=%@&user[username]=%@", email,token,uid,username];
+    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding                            allowLossyConversion:YES];
+	
+    NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
+    NSString*url= @"http:/test:test@trainingtest.herokuapp.com/api/v1/users/authentications";
+    NSMutableURLRequest *request = [self LoginLocal:postData :postLength: url:@"POST"];
+    [self getResponseData:request ];
+
+
+}
+
 - (IBAction)doBasicLogin:(id)sender {
     @try {
-        
+        UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    
+        spinner.center = CGPointMake(160, 240);
+        spinner.hidesWhenStopped = YES;
+    
+        [self.view addSubview:spinner];
+    
+        [spinner startAnimating];
+
         NSString *post = [NSString stringWithFormat:@"user[email]=%@&user[password]=%@", _email.text, _password.text];
         NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding                            allowLossyConversion:YES];
 	
         NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
-	
-        NSMutableURLRequest *request = [self LoginLocal:postData :postLength];
-        [self getResponseData:request];
-        [self performSegueWithIdentifier:@"local" sender:sender];
+        NSString*url= @"http:/test:test@trainingtest.herokuapp.com/api/v1/users/sign_in";
+        NSMutableURLRequest *request = [self LoginLocal:postData :postLength: url:@"POST"];
+        [self getResponseData:request ];
+        [spinner stopAnimating];
+
+        
     }
     @catch (NSException *exception) {
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:exception.description delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -107,12 +128,12 @@
     }
 }
 
--(NSMutableURLRequest*)LoginLocal:(NSData*)postData:(NSString*)postLength{
+-(NSMutableURLRequest*)LoginLocal:(NSData*)postData:(NSString*)postLength:(NSString*)url:(NSString*)method{
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init] ;
-    [request setURL:[NSURL URLWithString:@"http:/test:test@trainingtest.herokuapp.com/api/v1/users/sign_in"]];
+    [request setURL:[NSURL URLWithString:url]];
     
-    [request setHTTPMethod:@"POST"];
+    [request setHTTPMethod:method];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
 	[request setHTTPBody:postData];
@@ -121,14 +142,25 @@
 
 }
 
--(void)getResponseData:(NSMutableURLRequest*)request{
+-(void)getResponseData:(NSMutableURLRequest*)request {
     NSURLResponse *response;
     NSError *err;
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
     if (responseData) {
         NSDictionary *res = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableLeaves error:&err];
-       
-        NSLog(@"responseData: %@", res);
+         NSLog(@"responseData: %@", [res objectForKey:@"code"]);
+        if ([[res objectForKey:@"code"] isEqualToString: @"API_SUCCESS" ]) {
+            //[self performSegueWithIdentifier:@"local" sender:sender];
+            showInforView *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"showInforView"];
+            [viewController setShoEmailText:_email.text ];
+            [self presentModalViewController:viewController animated:YES];
+        }
+        else{
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:[NSString stringWithFormat:@"Opps Error %@", [res objectForKey:@"code"]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+        
+        }
+             
         
     }
 
@@ -176,6 +208,13 @@
         
     }
     
+}
+
+-(void)dismissPopover:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:NULL];
+    //or better yet
+
 }
 
 

@@ -27,6 +27,7 @@
 {
     [super viewDidLoad];
     _shoEmail.text = [NSString stringWithFormat:@"email: %@", _txt];
+    _showUsername.text = [NSString stringWithFormat:@"email: %@", _user_name];
     
 	// Do any additional setup after loading the view.
 }
@@ -36,8 +37,9 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)setShoEmailText:(NSString *)txt{
+-(void)setShoEmailText:(NSString *)txt:(NSString *)username{
     _txt = txt;
+    _user_name = username;
 }
 
 @end

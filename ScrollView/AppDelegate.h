@@ -12,4 +12,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) FBSession *session;
+- (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI;
+
++ (NSString *)FBErrorCodeDescription:(FBErrorCode) code;
 @end

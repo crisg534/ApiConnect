@@ -12,5 +12,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *shoEmail;
 @property (strong, nonatomic) UserClass* dataObject;
 @property (strong, nonatomic) NSString*txt;
+@property (strong, nonatomic) NSString*user_name;
+@property (nonatomic, assign) id delegate;
 -(void)setShoEmailText:(NSString *)txt;
+@property (weak, nonatomic) IBOutlet UILabel *showUsername;
 @end

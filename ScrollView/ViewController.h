@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *password;
 @property (weak, nonatomic) IBOutlet UIButton *fbutton;
 @property (weak, nonatomic) IBOutlet UILabel *txtfb;
+@property (strong, nonatomic) NSString*username;
 - (IBAction)doLoginFB:(id)sender;
 
 
