@@ -12,8 +12,11 @@
     NSMutableArray *name;
 	NSMutableArray *uid;
 	NSMutableArray *picture;
-    NSDictionary *friends;
+    NSDictionary*friends;
 
 }
--(void)GetFriendsList:(NSDictionary*)friends;
+@property (strong, nonatomic) NSDictionary*friends;
+@property (strong, nonatomic) NSDictionary*friendslist;
+
+-(IBAction)GetFriendsList:(NSDictionary*)friends;
 @end

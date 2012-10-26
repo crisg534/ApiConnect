@@ -27,8 +27,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _shoEmail.text = [NSString stringWithFormat:@"email: %@", _txt];
-    _showUsername.text = [NSString stringWithFormat:@"username: %@", _user_name];
+    _shoEmail.text = [NSString stringWithFormat:@"%@", _txt];
+    _showUsername.text = [NSString stringWithFormat:@"%@", _user_name];
     _my_picture.image = [self get_image:_user_picture];
     
 	// Do any additional setup after loading the view.
@@ -54,10 +54,10 @@
 - (IBAction)doShowFriends:(id)sender {
     AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
     if (appDelegate.session.isOpen) {
-        [[[FBRequest alloc] initWithSession:appDelegate.session graphPath:@"me?fields=friends"] startWithCompletionHandler:
+        [[[FBRequest alloc] initWithSession:appDelegate.session graphPath:@"me?fields=friends.fields(name,picture)"] startWithCompletionHandler:
          ^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
              if (!error) {
-                 _friends = [[NSDictionary alloc]initWithDictionary:[user objectForKey:@"friends"][@"data"]];
+                 _friends = [[NSDictionary alloc]initWithDictionary:[user objectForKey:@"friends"]];
                  [self performSegueWithIdentifier:@"friendslist" sender:self];
                  // self.userProfileImage.profileID = [user objectForKey:@"id"];
              }
@@ -72,8 +72,9 @@
     if ([[segue identifier]
          isEqualToString:@"friendslist"]){
         
-        FriendsViewController *viewController = [segue destinationViewController];
-        [viewController GetFriendsList:_friends];
+        FriendsViewController *viewController =  segue.destinationViewController;
+        viewController.friends= [[NSDictionary alloc]initWithDictionary:_friends];
+        [viewController GetFriendsList:[[NSDictionary alloc]initWithDictionary:_friends]];
         //[viewController setShoEmailText:_email.text:_username:@"" ];
         
         

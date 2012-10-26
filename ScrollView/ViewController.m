@@ -69,13 +69,19 @@
     AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
     if (appDelegate.session.isOpen) {
         // valid account UI is shown whenever the session is open
+        UIImage *img = [UIImage imageNamed:@"BlueButton.png"];
         [self.fbutton setTitle:@"Log out" forState:UIControlStateNormal];
+        
+        [self.fbutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self.fbutton setBackgroundImage:img forState:UIControlStateNormal];
+        
         [self.txtfb setText:[NSString stringWithFormat:@"https://graph.facebook.com/me/friends?access_token=%@",appDelegate.session.accessToken]];
         
 
     } else {
         // login-needed account UI is shown whenever the session is closed
-        [self.fbutton setTitle:@"Log in" forState:UIControlStateNormal];
+        UIImage *img = [UIImage imageNamed:@"X-Large_278x44_glowy.png"];
+        [self.fbutton setBackgroundImage:img forState:UIControlStateNormal];
         [self.txtfb setText:@"Login to create a link to fetch account data"];
     }
 

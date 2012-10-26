@@ -21,12 +21,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "ScrollView/ViewController.m"
-         timestampString = "372852347.831832"
+         timestampString = "372924834.534033"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "156"
-         endingLineNumber = "156"
-         landmarkName = "-getResponseData::"
+         startingLineNumber = "162"
+         endingLineNumber = "162"
+         landmarkName = "-getResponseData::::"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -34,12 +34,25 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "ScrollView/ViewController.m"
-         timestampString = "372852347.831832"
+         timestampString = "372924834.534033"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "155"
-         endingLineNumber = "155"
-         landmarkName = "-getResponseData::"
+         startingLineNumber = "161"
+         endingLineNumber = "161"
+         landmarkName = "-getResponseData::::"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "ScrollView/ViewController.m"
+         timestampString = "372924691.985358"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "75"
+         endingLineNumber = "75"
+         landmarkName = "-updateView"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

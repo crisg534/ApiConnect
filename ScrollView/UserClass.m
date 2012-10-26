@@ -9,6 +9,6 @@
 #import "UserClass.h"
 
 @implementation UserClass
-@synthesize email;
-@synthesize username;
+@synthesize name;
+@synthesize uid;
 @end

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface UserClass : NSObject
-@property (strong, nonatomic) NSString* email;
-@property (strong, nonatomic) NSString* username;
+@property (strong, nonatomic) NSString* name;
+@property (strong, nonatomic) NSString* uid;
+
 @end
