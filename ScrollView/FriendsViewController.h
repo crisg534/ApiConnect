@@ -16,7 +16,14 @@
 
 }
 @property (strong, nonatomic) NSDictionary*friends;
+@property (strong, nonatomic) NSMutableArray*name;
+@property (strong, nonatomic) NSMutableArray*uid;
+@property (strong, nonatomic) NSMutableArray*picture;
 @property (strong, nonatomic) NSDictionary*friendslist;
 
 -(IBAction)GetFriendsList:(NSDictionary*)friends;
+-(IBAction)GetNameList:(NSMutableArray*)Name;
+-(IBAction)GetUidList:(NSMutableArray*)Uid;
+-(IBAction)GetPictureList:(NSMutableArray*)Picture;
+
 @end

@@ -26,11 +26,7 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    name = [[NSMutableArray alloc] init];
-	picture = [[NSMutableArray alloc] init];
-	uid = [[NSMutableArray alloc] init];
-    
+    [super viewDidLoad];    
    
 }
 
@@ -86,6 +82,16 @@
   
 }
 
+-(IBAction)GetNameList:(NSMutableArray*)Name{
+    name=Name;
+}
+-(IBAction)GetUidList:(NSMutableArray*)Uid{
+    Uid = Uid;
+}
+-(IBAction)GetPictureList:(NSMutableArray*)Picture{
+    picture = Picture;
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -102,8 +108,6 @@
 -(void)getData
 
 {
-     NSLog(@"test aa %@",friendslist);
-    NSLog(@"test aa %@",friends);
     for (id data in  friends) {
         [name addObject:[data objectForKey:@"data"][@"name"]];
         [uid addObject:[data objectForKey:@"data"][@"id"]];
